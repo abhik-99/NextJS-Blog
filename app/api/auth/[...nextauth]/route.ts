@@ -7,12 +7,14 @@ import { SiweMessage } from "siwe";
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
+      id: "web3",
       name: "web3",
       credentials: {
         message: { label: "Message", type: "text" },
         signedMessage: { label: "Signed Message", type: "text" }, // aka signature
       },
       async authorize(credentials, req) {
+        console.log("\n\nHIT", credentials)
         if (!credentials?.signedMessage || !credentials?.message) {
           return null;
         }
@@ -26,7 +28,7 @@ export const authOptions: AuthOptions = {
           //   statement: process.env.NEXT_PUBLIC_SIGNIN_MESSAGE,
           //   nonce: await getCsrfToken(),
           //   expirationTime: new Date(Date.now() + 2*60*60*1000).toString(),
-          //   chain: chain?.id
+          //   chainId: chain?.id
           // });
 
           const siwe = new SiweMessage(JSON.parse(credentials?.message));
@@ -40,13 +42,12 @@ export const authOptions: AuthOptions = {
           if (result.data.statement !== process.env.NEXT_PUBLIC_SIGNIN_MESSAGE)
             throw new Error("Statement Mismatch");
 
-          if (new Date(result.data.expirationTime as string) < new Date())
-            throw new Error("Signature Already expired");
-          
-            return {
-              id: siwe.address
-            }
-          
+          // if (new Date(result.data.expirationTime as string) < new Date())
+          //   throw new Error("Signature Already expired");
+          console.log("Returning")
+          return {
+            id: siwe.address,
+          };
         } catch (error) {
           console.log(error);
           return null;
@@ -54,11 +55,22 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
-  session: {strategy:"jwt"},
-  
+  session: { strategy: "jwt" },
+
   debug: process.env.NODE_ENV === "development",
-  
+
   secret: process.env.NEXTAUTH_SECRET,
+
+  callbacks: {
+    async session({ session, token }: { session: any; token: any }) {
+      session.user.address = token.sub;
+      session.user.token = token;
+      return session;
+    },
+  },
+  pages: {
+    signIn:"/auth"
+  },
 };
 
 const handler = NextAuth(authOptions);
