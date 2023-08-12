@@ -34,7 +34,7 @@ export const authOptions: AuthOptions = {
           const siwe = new SiweMessage(JSON.parse(credentials?.message));
           const result = await siwe.verify({
             signature: credentials.signedMessage,
-            nonce: await getCsrfToken({ req }),
+            nonce: await getCsrfToken({ req: {headers: req.headers} }),
           });
 
           if (!result.success) throw new Error("Invalid Signature");
