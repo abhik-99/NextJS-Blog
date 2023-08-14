@@ -1,6 +1,6 @@
 import React from "react";
 import CustomAppbar from "../components/CustomAppbar";
-import Card from "../components/Card";
+import Card from "../components/ui/Card";
 
 const HiddenPage = () => {
   return (
@@ -14,6 +14,13 @@ const HiddenPage = () => {
         <h2 className="text-3xl text-gray-500">
           You have <span className="font-bold">Started</span>.
         </h2>
+        <p className="">
+          You have been signed in{" "}
+          <span className="font-semibold text-green-400 text-xl">
+            successfully
+          </span>
+          !
+        </p>
         <Card />
       </main>
     </div>
