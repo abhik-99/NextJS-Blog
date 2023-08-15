@@ -1,7 +1,8 @@
-'use client'
+"use client";
 import { useDisconnect } from "wagmi";
 import { signOut } from "next-auth/react";
-import React from 'react'
+import React from "react";
+import StyledButton from "./ui/StyledButton";
 
 const SignoutButton = () => {
   const { disconnectAsync } = useDisconnect();
@@ -10,13 +11,10 @@ const SignoutButton = () => {
     signOut({ callbackUrl: "/" });
   };
   return (
-    <button
-    className="rounded-lg py-2 px-4 bg-red-700 hover:border hover:border-red-700 hover:bg-transparent"
-    onClick={handleSignout}
-  >
-    Sign Out
-  </button>
-  )
-}
+    <StyledButton color="red" onClick={handleSignout}>
+      Sign Out
+    </StyledButton>
+  );
+};
 
-export default SignoutButton
+export default SignoutButton;

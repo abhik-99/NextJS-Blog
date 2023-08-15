@@ -7,6 +7,7 @@ declare global {
       NEXTAUTH_SECRET: string;
       SIWE_DOMAIN: string;
       NEXT_PUBLIC_GREETING_CONTRACT: `0x${string}`;
+      NEXT_PUBLIC_NFT_CONTRACT: `0x${string}`;
     }
   }
 }

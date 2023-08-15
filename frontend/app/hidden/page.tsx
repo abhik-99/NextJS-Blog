@@ -1,6 +1,7 @@
 import React from "react";
 import CustomAppbar from "../components/CustomAppbar";
-import Card from "../components/ui/Card";
+import { GreetingCard } from "../components/example1";
+import { NFTCard } from "../components/example2";
 
 const HiddenPage = () => {
   return (
@@ -21,7 +22,11 @@ const HiddenPage = () => {
           </span>
           !
         </p>
-        <Card />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <GreetingCard />
+        <NFTCard />
+
+        </div>
       </main>
     </div>
   );
